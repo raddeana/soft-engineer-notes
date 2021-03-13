@@ -108,3 +108,48 @@ min-height
   - border-radius
   - filter
   - :nth-child
+
+### 回流和重绘
+#### 浏览器渲染过程
+- 解析HTML，生成DOM树，解析CSS，生成CSSOM树
+- 将DOM树和CSSOM树结合，生成渲染树(Render Tree)
+- Layout(回流):根据生成的渲染树，进行回流(Layout)，得到节点的几何信息（位置，大小）
+- Painting(重绘):根据渲染树以及回流得到的几何信息，得到节点的绝对像素
+- Display:将像素发送给GPU，展示在页面上
+
+#### 构建渲染树
+- 从DOM树的根节点开始遍历每个可见节点
+- 对于每个可见的节点，找到CSSOM树中对应的规则，并应用它们
+- 根据每个可见节点以及其对应的样式，组合生成渲染树
+
+#### 回流一定会触发重绘，而重绘不一定会回流
+#### 浏览器的优化机制
+  - 现代的浏览器都是很聪明的，由于每次重排都会造成额外的计算消耗，因此大多数浏览器都会通过队列化修改并批量执行来优化重排过程
+  - 浏览器会将修改操作放入到队列里，直到过了一段时间或者操作达到了一个阈值，才清空队列
+  - 当获取布局信息的操作的时候，会强制队列刷新
+
+#### 减少回流和重绘
+- 最小化重绘和重排
+- 批量修改DOM
+- 避免触发同步布局事件
+  - 例子 
+```
+function initParagraphs () {
+    for (let i = 0; i < paragraphs.length; i++) {
+        paragraphs[i].style.width = box.offsetWidth + 'px';
+    }
+}
+```
+  - 优化
+```
+const width = box.offsetWidth;
+function initParagraphs () {
+    for (let i = 0; i < paragraphs.length; i++) {
+        paragraphs[i].style.width = width + 'px';
+    }
+}
+```
+- 对于复杂动画效果,使用绝对定位让其脱离文档流
+- css3硬件加速（GPU加速）
+  - 使用css3硬件加速，可以让transform、opacity、filters这些动画不会引起回流重绘
+  - 但是对于动画的其它属性，比如background-color这些，还是会引起回流重绘的，不过它还是可以提升这些动画的性能
