@@ -4,8 +4,8 @@
 如果两个或多个 Element 的 ComputedStyle 不通过计算可以确认他们相等，那么这些 ComputedStyle 相等的 Elements 只会计算一次样式，其余的仅仅共享该 ComputedStyle
 - TagName 和 Class 属性必须一样
 - 不能有 Style 属性。哪怕 Style 属性相等，他们也不共享
-- 不能使用 Sibling selector ，譬如: first-child , :last-selector , + selector 
-- mappedAttribute 必须相等
+- 不能使用 Sibling selector，譬如: first-child , :last-selector , + selector 
+- mappedAttribute 必须相等 eg（align）：<p align="middle">paragraph</p>
 
 ### CSS 书写顺序
 浏览器并不是一获取到 CSS 样式就立马开始解析，
