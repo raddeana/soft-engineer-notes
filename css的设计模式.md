@@ -1,0 +1,16 @@
+### css的设计模式
+- OOCSS：主要有两个意思: 结构和设计分离，容器和内容分离
+- Atomic CSS：是CSS架构的一种方法, 它的好处是写出基于视觉功能的小的, 单用途CSS类
+- MCSS （多层级）：多层级的css，将css分层
+- SMACSS：SMACSS是可扩展和模块化结构CSS的简称
+  - 基本规则(Base rules): 这些是网站的主要元素的样式, 如body, input, button, ul, ol等，主要使用HTML标签和属性选择器, 在特殊情况下, 使用CSS类；
+  - 布局规则(Layout rules): 主要是些全局元素, 顶部, 页脚, 边栏等模块的大小. 使用ID选择器, 因为这些模块不太可能在同一个页面上出现多次；
+  - 模块规则(Modules rules): 模块(类似于卡片布局)可以在一个页面中使用多次. 对于模块CSS类, 不建议使用ID和tag选择器(这是为了方便重用以及上下文独立)； 
+  - 状态规则(State rules): 在这一步中, 规定了模块的各种状态以及网站的基础部分. 这是唯一允许使用"!important"的地方；
+  - 主题规则(Theme rules): 设计您可能需要更换的样式；
+- AMCSS：对属性进行编码，针对属性进行css设计
+- BEM：
+  - Block（块）：header, container, menu, checkbox, input
+  - Element(元素)：menu item, list item, checkbox caption, head title
+  - Modifier（状态）：disabled, highlighted, checked, fixed, size big, color red
+- Css Module：指的是我们像 import js 一样去引入我们的 css 代码，代码中的每一个类名都是引入对象的一个属性，即可在使用时明确指定所引用的 css 样式
