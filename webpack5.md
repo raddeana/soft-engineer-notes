@@ -27,4 +27,50 @@
 - 更好的 Tree Shaking
   - 嵌套 tree-shaking：Webpack现在会去追踪 export 的链路，对于嵌套场景有更好的优化
   - 内部模块：optimization.innerGraph记录依赖关系
+- 支持 Top Level Await，从此告别 async，即允许开发者在 async 函数外部使用 await 字段
+
+### 内置静态资源构建能力 —— Asset Modules
+```
+module.exports = {
+    module: {
+      rules: [
+          {
+            test: /\.(png|jpg|svg|gif)$/,
+            type: 'asset/resource',
+            generator: {
+                // [ext]前面自带"."
+                filename: 'assets/[hash:8].[name][ext]',
+            },
+        },
+      ],
+    },
+}
+```
+type 取值如下几种
+- asset/source ——功能相当于 raw-loader。
+- asset/inline——功能相当于 url-loader，若想要设置编码规则，可以在 generator 中设置 dataUrl。具体可参见官方文档[10]。
+- asset/resource——功能相当于 file-loader。项目中的资源打包统一采用这种方式，得益于团队项目已经完全铺开使用了 HTTP2 多路复用的相关特性，我们可以将资源统一处理成文件的形式，在获取时让它们能够并行传输，避免在通过编码的形式内置到 js 文件中，而造成资源体积的增大进而影响资源的加载。
+- asset—— 默认会根据文件大小来选择使用哪种类型，当文件小于 8 KB 的时候会使用 asset/inline，否则会使用 asset/resource
+
+### 内置 FileSystem Cache 能力加速二次构建
+生产环境下默认的缓存存放目录在 node_modules/.cache/webpack/default-production 中
+```
+// webpack.config.js
+module.exports = {
+    cache: {
+        type: 'filesystem',
+        // 可选配置
+        buildDependencies: {
+            config: [__filename],  // 当构建依赖的config文件（通过 require 依赖）内容发生变化时，缓存失效
+        },
+        name: ''                   // 配置以name为隔离，创建不同的缓存文件，如生成PC或mobile不同的配置缓存
+    },
+}
+```
+
+### 内置 WebAssembly 编译及异步加载能力
+WebAssembly[15] 被设计为一种面向 web 的二进制的格式文件，以其更接近于机器码而拥有着更小的文件体积和更快速的执行效率
+### 内置 Web Worker 构建能力
+
+
 
