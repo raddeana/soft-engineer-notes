@@ -29,7 +29,7 @@
 
 ### async && defer
 - 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，将阻塞html文档的构建解析
-- async 属性的脚本都在它下载结束后之后立刻执行，构建解析后续html文档的过程将和 script.js 的加载与执行并行进行，同时会在window的load事件之前执行
+- async 属性的脚本都在它下载结束后之后立刻执行，构建解析后续html文档的过程将和 script.js 的加载与执行并行进行
 - defer, 会立即加载脚本，脚本将在页面解析完毕之后执行，同时会在document的DOMContentLoader之前执行
 ![image](https://user-images.githubusercontent.com/5197188/120893280-0bec2300-c645-11eb-9312-bdc57cad826c.png)
 
