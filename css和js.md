@@ -27,6 +27,12 @@
 - javascript 应尽量少影响 DOM 的构建
 
 ### async && defer
-- async 属性的脚本都在它下载结束后之后立刻执行，同时会在window的load事件之前执行
-- defer属性的脚本都是在页面解析完毕之后，按照原本的属性执行，同时会在document的DOMContentLoader之前执行
+- 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，将阻塞html文档的构建解析
+- async 属性的脚本都在它下载结束后之后立刻执行，构建解析后续html文档的过程将和 script.js 的加载与执行并行进行，同时会在window的load事件之前执行
+- defer, 会立即加载脚本，脚本将在页面解析完毕之后执行，同时会在document的DOMContentLoader之前执行
 ![image](https://user-images.githubusercontent.com/5197188/120893280-0bec2300-c645-11eb-9312-bdc57cad826c.png)
+
+### document的DOMContentLoader事件和window的load事件
+- DOMContentLoaded: DOM解析完成即触发此事件，不等待styles, images等资源的加载
+- load：依赖的资源也已加载完成
+
