@@ -29,3 +29,4 @@
 ### async && defer
 - async 属性的脚本都在它下载结束后之后立刻执行，同时会在window的load事件之前执行
 - defer属性的脚本都是在页面解析完毕之后，按照原本的属性执行，同时会在document的DOMContentLoader之前执行
+![image](https://user-images.githubusercontent.com/5197188/120893280-0bec2300-c645-11eb-9312-bdc57cad826c.png)
