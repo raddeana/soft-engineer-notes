@@ -18,9 +18,10 @@
 
 ### 阻塞渲染：CSS 与 javascript
 - 当HTML解析器（HTML Parser）被脚本阻塞时，解析器虽然会停止 DOM tree 构建解析，但仍会识别该脚本后面的资源，并进行预加载
-- 存在阻塞的 CSS 资源时， 浏览器会延迟javascript 的执行和 Render Tree 构建
+- 存在阻塞的 CSS 资源时，浏览器会延迟javascript 的执行和 Render Tree 构建
 - 默认情况下，CSS 被视为阻塞渲染的资源，这意味着浏览器不会渲染任何已处理的内容，直至CSSOM构建完毕
-- javascript 不仅可以读取和修改 DOM 属性，还可以读取和修改 CSSOM 属性
+- CSS 被默认被视为阻塞渲染的资源，因此浏览器将在 CSSOM 构建完毕前不会渲染任何已处理的内容
+- javascript 不仅可以读取和修改 DOM 属性，还可以读取和修改 CSSOM 属性，因此CSS解析与script的执行互斥，JavaScript执行将阻塞html文件构建解析
 
 ### 原则
 - CSS 优先：引入顺序上，CSS 资源优于javascript资源
