@@ -14,7 +14,7 @@
 - display:none 的节点不会被加入Render Tree, 而 visibility:hidden 则会；所以，如果某个节点最开始是不显示的，设为display:none 是更优的
 - display:none 会触发reflow, 而 visibility:hidden 只会触发repaint，因为位置没有变化
 - 有些情况下，比如修改了元素的样式浏览器并不会立刻reflow 或 repaint 一次，而是会把这样的操作积攒一批，然后做一次 reflow，这叫 异步 reflow 或 增量异步 reflow；但是在有些情况下，比如resize 窗口，改变了页面默认的字体等；对于这些操作，浏览器会马上进行reflow
-- 渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建和布局render tree；它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容
+- 渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建render tree；它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容
 
 ### 阻塞渲染：CSS 与 javascript
 - 当HTML解析器（HTML Parser）被脚本阻塞时，解析器虽然会停止 DOM tree 构建解析，但仍会识别该脚本后面的资源，并进行预加载
