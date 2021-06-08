@@ -21,15 +21,15 @@
 - 存在阻塞的 CSS 资源时，浏览器会延迟javascript 的执行和 Render Tree 构建
 - 默认情况下，CSS 被视为阻塞渲染的资源，这意味着浏览器不会渲染任何已处理的内容，直至CSSOM构建完毕
 - CSS 被默认被视为阻塞渲染的资源，因此浏览器将在 CSSOM 构建完毕前不会渲染任何已处理的内容
-- javascript 不仅可以读取和修改 DOM 属性，还可以读取和修改 CSSOM 属性，因此CSS解析与script的执行互斥，JavaScript执行将阻塞html文件构建解析
+- javascript 不仅可以读取和修改 DOM 属性，还可以读取和修改 CSSOM 属性，因此CSS解析与script的执行互斥，JavaScript执行还将阻塞html文件解析
 
 ### 原则
 - CSS 优先：引入顺序上，CSS 资源优于javascript资源
 - javascript 应尽量少影响 DOM 的构建
 
 ### async && defer
-- 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，将阻塞html文档的构建解析
-- async 属性的脚本都在它下载结束后之后立刻执行，构建解析后续html文档的过程将和 script.js 的加载与执行并行进行
+- 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，将阻塞html文档的解析
+- async 属性的脚本都在它下载结束后之后立刻执行，解析后续html文档的过程将和 script 的加载与执行并行进行
 - defer, 会立即加载脚本，脚本将在页面解析完毕之后执行，同时会在document的DOMContentLoader之前执行
 ![image](https://user-images.githubusercontent.com/5197188/120893280-0bec2300-c645-11eb-9312-bdc57cad826c.png)
 
