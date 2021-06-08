@@ -13,12 +13,12 @@
 ### 注意
 - display:none 的节点不会被加入Render Tree, 而 visibility:hidden 则会；所以，如果某个节点最开始是不显示的，设为display:none 是更优的
 - display:none 会触发reflow, 而 visibility:hidden 只会触发repaint，因为位置没有变化
-- 有些情况下，比如修改了元素的样式浏览器并不会立刻reflow 或 repaint 一次，而是会把这样的操作积攒一批，然后做一次 reflow，这叫 异步 reflow 或 增量异步 reflow；但是在有些情况下，比如resize 窗口，改变了页面默认的字体等。对于这些操作，浏览器会马上进行reflow
-- 渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建和布局render tree。它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容
+- 有些情况下，比如修改了元素的样式浏览器并不会立刻reflow 或 repaint 一次，而是会把这样的操作积攒一批，然后做一次 reflow，这叫 异步 reflow 或 增量异步 reflow；但是在有些情况下，比如resize 窗口，改变了页面默认的字体等；对于这些操作，浏览器会马上进行reflow
+- 渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建和布局render tree；它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容
 
 ### 阻塞渲染：CSS 与 javascript
 - 当HTML解析器（HTML Parser）被脚本阻塞时，解析器虽然会停止 DOM tree 构建解析，但仍会识别该脚本后面的资源，并进行预加载
-- 存在阻塞的 CSS 资源时，浏览器会延迟javascript 的执行和 Render Tree 构建
+- 存在阻塞的 CSS 资源时，浏览器会延迟 javascript 的执行和 Render Tree 构建
 - 默认情况下，CSS 被视为阻塞渲染的资源，这意味着浏览器不会渲染任何已处理的内容，直至CSSOM构建完毕
 - CSS 被默认被视为阻塞渲染的资源，因此浏览器将在 CSSOM 构建完毕前不会渲染任何已处理的内容
 - javascript 不仅可以读取和修改 DOM 属性，还可以读取和修改 CSSOM 属性，因此CSS解析与script的执行互斥，JavaScript执行还将阻塞html文件解析
@@ -29,7 +29,7 @@
 
 ### async && defer
 - 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，将阻塞html文档的解析
-- async 属性的脚本都在它下载结束后之后立刻执行，解析后续html文档的过程将和 script 的加载与执行并行进行
+- async 属性的脚本都在它下载结束后之后立刻执行，解析后续html文档的过程将和 script 的加载并行进行
 - defer, 会立即加载脚本，脚本将在页面解析完毕之后执行，同时会在document的DOMContentLoader之前执行
 ![image](https://user-images.githubusercontent.com/5197188/120893280-0bec2300-c645-11eb-9312-bdc57cad826c.png)
 
