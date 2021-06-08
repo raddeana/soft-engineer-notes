@@ -25,7 +25,7 @@
 
 ### 原则
 - CSS 优先：引入顺序上，CSS 资源优于javascript资源
-- javascript 应尽量少影响 DOM 的构建
+- javascript 应尽量少影响html解析
 
 ### async && defer
 - 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，将阻塞html文档的解析
