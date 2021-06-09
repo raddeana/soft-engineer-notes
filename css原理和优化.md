@@ -176,3 +176,4 @@ function initParagraphs () {
 - css3硬件加速（GPU加速）
   - 使用css3硬件加速，可以让transform、opacity、filters这些动画不会引起回流重绘
   - 但是对于动画的其它属性，还是会引起回流重绘的，不过它还是可以提升这些动画的性能
+  - 滚动过程中尝试使用 pointer-events: none 禁止鼠标事件， 可提高滚动时的帧频
