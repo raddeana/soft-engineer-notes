@@ -1,3 +1,4 @@
+### 指令的编译
 #### 解析模版字符串生成AST
 ```javascript
 const ast = parse(template.trim(), options)
@@ -108,3 +109,52 @@ function genAssignmentCode (value, assignment) {
 #### $event.target.composing
 用于判断此次input事件是否是IME构成触发的，如果是IME构成，直接return；IME 是输入法编辑器(Input Method Editor) 的英文缩写，IME构成指我们在输入文字时，处于未确认状态的文字
 
+### 用户输入事件的绑定和触发vmodel更新
+#### inserted
+```javascript
+    if (vnode.tag === 'select') {
+      // #6903
+      if (oldVnode.elm && !oldVnode.elm._vOptions) {
+        mergeVNodeHook(vnode, 'postpatch', () => {
+          directive.componentUpdated(el, binding, vnode)
+        })
+      } else {
+        setSelected(el, binding, vnode.context)
+      }
+      el._vOptions = [].map.call(el.options, getValue)
+    } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
+      el._vModifiers = binding.modifiers
+      if (!binding.modifiers.lazy) {
+        el.addEventListener('compositionstart', onCompositionStart)
+        el.addEventListener('compositionend', onCompositionEnd)
+        // Safari < 10.2 & UIWebView doesn't fire compositionend when
+        // switching focus before confirming composition choice
+        // this also fixes the issue where some browsers e.g. iOS Chrome
+        // fires "change" instead of "input" on autocomplete.
+        el.addEventListener('change', onCompositionEnd)
+        /* istanbul ignore if */
+        if (isIE9) {
+          el.vmodel = true
+        }
+      }
+    }
+```
+#### trggier
+```javascript
+  function onCompositionStart (e) {
+    e.target.composing = true
+  }
+
+  function onCompositionEnd (e) {
+    // prevent triggering an input event for no reason
+    if (!e.target.composing) return
+    e.target.composing = false
+    trigger(e.target, 'input')
+  }
+
+  function trigger (el, type) {
+    const e = document.createEvent('HTMLEvents')
+    e.initEvent(type, true, true)
+    el.dispatchEvent(e)
+  }
+```
